@@ -17,6 +17,8 @@ ABSTRACTAPI_URL: str = (
     'https://timezone.abstractapi.com/v1/current_time?'
     'api_key=6585964da71f44a5aa9b37a5232a1c13&location='
 )
+cities: Dict[str, int] = dict()
+
 while True:
     print(
         '\nEnter command:\n'
@@ -27,7 +29,13 @@ while True:
     command: str = input(">>> ")
 
     if command == '1':
-        ...
+
+        for city_name in cities:
+            local_time = (
+                datetime.datetime.now(datetime.timezone.utc)
+                + datetime.timedelta(hours=cities[city_name])
+            ).strftime('%H:%M')
+            print(f'{city_name} - {local_time}')
 
     elif command == '2':
         city_name: str = input("Enter city name: ")
@@ -45,6 +53,7 @@ while True:
                 + datetime.timedelta(hours=int(city_data['gmt_offset']))
             ).strftime('%H:%M')
             print(f'Current time in {city_name} - {local_time}')
+            cities[city_name] = int(city_data['gmt_offset'])
 
     elif command == '3':
         break
