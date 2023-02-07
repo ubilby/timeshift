@@ -53,7 +53,7 @@ class Application:
         else:
             print(f"Unknown command {command}")
 
-    def show_cities_list(self):
+    def show_cities_list(self) -> None:
         current_utc_time: datetime.datetime = (
             datetime.datetime.now(datetime.timezone.utc)
         )
@@ -64,13 +64,12 @@ class Application:
             )
             print(f"{city_name} - {local_time}")
 
-    def add_city(self):
+    def add_city(self) -> None:
         city_name: str = input("Enter city name: ")
         city_data = self.fetcher.fetch_city_data(city_name)
 
         if not city_data:
             print(f"There is not city {city_name}")
-            return {}
 
         city = City(city_name, city_data["gmt_offset"])
         self.cities[city_name] = city
@@ -86,7 +85,7 @@ class AbstractAPI(CityDataFetcher):
         "api_key=6585964da71f44a5aa9b37a5232a1c13&location="
     )
 
-    def fetch_city_data(self, city_name):
+    def fetch_city_data(self, city_name) -> Dict[str, str]:
         city_data: Dict[str, str] = (
             requests.get(self.ABSTRACTAPI_URL + city_name).json()
         )
@@ -100,6 +99,7 @@ def get_local_time(
         datetime.datetime.now(datetime.timezone.utc)
     )
 ) -> str:
+
     return (base_time + datetime.timedelta(hours=gmt_offset)).strftime("%H:%M")
 
 
