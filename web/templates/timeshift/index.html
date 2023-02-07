@@ -14,6 +14,16 @@
     </div>
     <div>
       {% comment %} Блок вывода информацию {% endcomment %}
+      {% if error %}
+        <div>
+            {{  error  }}
+        </div>
+      {% elif name%}
+        <div>
+            {{ name }} : {{ local_time }}
+        </div>
+      {% endif %}
+
     </div>
   </body>
 
