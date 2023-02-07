@@ -5,7 +5,15 @@
   </head>
   <body>
     <div>
-      Hello world!
+      {% comment %} Блок ввода города {% endcomment %}
+      <form method="post">
+        {% csrf_token %}
+        <input name="city_name">
+        <input type="submit" value="Найти город">
+      </form>
+    </div>
+    <div>
+      {% comment %} Блок вывода информацию {% endcomment %}
     </div>
   </body>
 
